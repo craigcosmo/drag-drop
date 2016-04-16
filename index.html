@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+	*{
+		padding:0;
+		margin:0;
+		box-sizing: border-box;
+	}
+	ul, ol {
+		display:block;
+		width:200px;
+		height:300px;
+		float:left ;
+		margin:20px;
+	}
+	ul{background: #927aff;}
+	ol {background:#dda3f2;}
+	li {
+		list-style-type:none;
+		padding:6px 10px;
+		color:#fff;
+		display:block;
+		border-bottom:1px solid #fff;
+		cursor:pointer;
+	}
+</style>
+	
+</head>
+<body>
+<ul id="music">
+	<li draggable="true">pop</li>
+	<li draggable="true">hiphop</li>
+	<li draggable="true">jazz</li>
+	<li draggable="true">country</li>
+</ul>
+
+<ol id="math">
+	<li draggable="true">number</li>
+	<li draggable="true">integeter</li>
+	<li draggable="true">floating point</li>
+</ol>
+
+<script>
+
+var li = document.querySelectorAll('li');
+var currentDragging;
+
+Array.prototype.forEach.call(li, function(item) {
+    item.ondragstart = function (e){
+    	e.dataTransfer.setData("secret", 'dummy'); // this line is needed to fix bug undraggable in firefox
+    	currentDragging = e.target;
+    }
+});
+console.log(currentDragging);
+
+document.getElementById('math').ondrop = function(e) {
+  // e.preventDefault();
+  this.appendChild(currentDragging);
+};
+document.getElementById('music').ondrop = function(e) {
+  // e.preventDefault();
+  this.appendChild(currentDragging);
+};
+document.getElementById('math').ondragover = function(e) {
+  e.preventDefault();
+};
+document.getElementById('music').ondragover = function(e) {
+  e.preventDefault();
+};
+
+</script>
+</body>
+</html>
